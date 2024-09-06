@@ -1,0 +1,38 @@
+@if (isLoading) {
+<div class="card flex justify-content-center">
+  <p-progressSpinner ariaLabel="loading" styleClass="w-3rem h-3rem" />
+</div>
+} @else {
+<div>
+  <span class="p-text-secondary block mb-5">Extend borrowing period</span>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="username" class="font-semibold">Current due date</label>
+    <input
+      id="bookTitle"
+      type="text"
+      pInputText
+      class="p-inputtext p-component p-element font-semibold text-black-alpha-90 font-semibold text-black-alpha-90"
+      variant="filled"
+      [value]="borrowing()?.dueDate"
+      [disabled]="true"
+    />
+  </div>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="date" class="font-semibold">New due date</label>
+    <p-calendar
+      pTooltip="Choose borrow date (now or future)"
+      tooltipPosition="top"
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      inputId="icondisplay"
+      [(ngModel)]="selectedNewDueDate"
+      [showOnFocus]="false"
+      (ngModelChange)="onNewDueDateChange($event)"
+      appendTo="body"
+    />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="Extend" (click)="onExtend()" />
+  </div>
+</div>
+}

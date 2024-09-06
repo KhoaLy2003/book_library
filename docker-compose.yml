@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  mysql-container:
+    container_name: mysql-container
+    image: mysql:8.2.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: book-library
+      MYSQL_USER: user          
+      MYSQL_PASSWORD: 12345
+    ports:
+      - "3307:3306"
+    # volumes:
+    #   - mysql-springboot-data:/var/lib/mysql
+    #   - mysql-springboot-config-deamond:/etc/mysql/conf.d
+    #   - ./be/initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - book-library-network
+
+  keycloak-container:
+    container_name: keycloak-container
+    image: quay.io/keycloak/keycloak:25.0.2
+    command: start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      # KC_PROXY: passthrough
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql-container:3306/book-library
+      KC_DB_USERNAME: user
+      KC_DB_PASSWORD: 12345
+    ports:
+      - '8081:8080'
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./keycloak/themes:/opt/keycloak/themes
+    depends_on:
+      - mysql-container
+    networks:
+      - book-library-network
+
+networks:
+  book-library-network:
+    driver: bridge
+    name: book-library-network

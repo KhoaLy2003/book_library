@@ -1,0 +1,106 @@
+<div class="field">
+  <label for="bookSearch">Search Book</label>
+  <form
+    id="bookSearch"
+    [formGroup]="searchBookForm"
+    (ngSubmit)="onSearchBook()"
+  >
+    <div class="flex align-items-center gap-3">
+      <p-inputGroup>
+        <input
+          type="text"
+          pInputText
+          placeholder="ISBN"
+          class="mr-3 w-20rem p-inputtext p-component p-element"
+          name="keyword"
+          formControlName="searchBookKeyword"
+        />
+        <button
+          type="submit"
+          pButton
+          icon="pi pi-search"
+          class="p-button-warning"
+        ></button>
+      </p-inputGroup>
+    </div>
+  </form>
+</div>
+
+@if (isLoading) {
+<div class="card flex justify-content-center">
+  <p-progressSpinner ariaLabel="loading" styleClass="w-3rem h-3rem" />
+</div>
+} @else {
+<div class="mt-5 field">
+  <label for="bookList">Book List</label>
+  <p-table [value]="books()" id="bookList">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Title</th>
+        <th>ISBN13</th>
+        <th>Status</th>
+        <th>Current Quantity</th>
+        <th style="width: 5rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-book>
+      <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.isbn13 }}</td>
+        <td>{{ book.status }}</td>
+        <td>{{ book.currentQuantity }}</td>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-plus"
+            (click)="onSelectBook(book)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+} @if (selectedBooks().length > 0) {
+<div class="mt-5 field">
+  <label for="selectedBooks">Selected Books</label>
+  <p-table [value]="selectedBooks()" id="selectedBooks">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Title</th>
+        <th>ISBN13</th>
+        <th>Current Quantity</th>
+        <th>Borrow Quantity</th>
+        <th style="width: 5rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-borrowingBook>
+      <tr>
+        <td>{{ borrowingBook.book.title }}</td>
+        <td>{{ borrowingBook.book.isbn13 }}</td>
+        <td>{{ borrowingBook.book.currentQuantity }}</td>
+        <td class="field">
+          <input
+            type="number"
+            class="p-inputtext p-component p-element"
+            [(ngModel)]="borrowingBook.borrowAmount"
+            min="1"
+            placeholder="Enter amount"
+            (ngModelChange)="onBorrowAmountChange(borrowingBook, $event)"
+          />
+        </td>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-minus"
+            (click)="onUnSelectBook(borrowingBook.book)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+}

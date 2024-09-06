@@ -1,0 +1,34 @@
+https://www.figma.com/community/file/1223285025012921986/my-book-shelf
+
+GET /api/borrowings/history?pageNo=0&startDate=2024-01-01&endDate=2024-12-31
+
+    CREATED,
+    CANCELLED,
+    BORROWED,
+    RETURNED,
+    OVERDUE
+	
+Librarian create new borrowing |-| CREATED(not today)/BORROWED(today)
+=> Create borrowing API
+Reader return book, Librarian update borrowing |-| CREATED/BORROWED -> RETURNED(all borrowing book amount return)
+=> Return borrowing API
+Reader want to cancel the borrowing, Librarian cancel |-| CREATED/BORROWED -> CANCELLED
+=> Cancel borrowing API
+Due date is over but reader not return borrowing books |-| CREATED/BORROWED -> OVERDUE 
+=> Schedule job (run at 17:30 pm every day)
+Reader want to extend the borrowing period |-| CREATED/BORROWED | OVERDUE -> CREATED/BORROWED
+=> Extend borrowing API
+
+TODO:
+- Validate borrowing date and due date not in past
+- Validate extend date not in past or before current due date
+- Dashboard page: (right side)
+- Keycloak
+- Generate pdf 
+- Redis
+- Elasticsearch
+- MembershipTypeEnum extend business
+- Search member
+- Book detail page (right side)
+- Upload file
+- Staff management

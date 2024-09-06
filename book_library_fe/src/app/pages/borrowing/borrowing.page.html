@@ -1,0 +1,73 @@
+<div class="table-container">
+  <div class="card search-bar-container">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <div class="p-toolbar-group-start">
+        <p-button icon="pi pi-print" class="mr-2" />
+        <p-button icon="pi pi-upload" (click)="generatePdf()"/>
+      </div>
+      <div class="p-toolbar-group-center">
+        <div class="flex align-items-center gap-3">
+          <label for="date">Borrow Date</label>
+          <p-calendar
+            pTooltip="Start Date"
+            tooltipPosition="top"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            inputId="icondisplay"
+            [(ngModel)]="selectedStartDate"
+            (ngModelChange)="onStartDateChange($event)"
+            dateFormat="DD, dd/mm/yy"
+          />
+          <p-calendar
+            pTooltip="End Date"
+            tooltipPosition="top"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            inputId="icondisplay"
+            [(ngModel)]="selectedEndDate"
+            (ngModelChange)="onEndDateChange($event)"
+            dateFormat="DD, dd/mm/yy"
+          />
+        </div>
+        <div class="ml-3">
+          <p-dropdown
+            [options]="filters"
+            optionLabel="label"
+            placeholder="Select filter"
+            optionValue="value"
+            [(ngModel)]="selectedStatus"
+            (onChange)="onFilterChange($event)"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="p-toolbar-group-end">
+        <p-button
+          icon="pi pi-plus"
+          class="mr-2"
+          [routerLink]="['/borrowing/new-borrowing']"
+        />
+        <p-button type="button" icon="pi pi-refresh" (click)="onReset()" />
+      </div>
+    </p-toolbar>
+
+    <app-borrowing-list
+      [borrowingList]="borrowingList()"
+      [isLoading]="isLoading"
+      (reloadList)="loadBorrowingHistory(0)"
+    />
+    @if (borrowingList().length <= 0 && !isLoading) {
+    <div class="card flex justify-content-center">
+      <p class="text-center font-medium">No data</p>
+    </div>
+    } @else if(!isLoading) {
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first()"
+      [rows]="rows"
+      [totalRecords]="totalElements()"
+    ></p-paginator>
+    }
+  </div>
+
+  <p-toast [life]="2000" [position]="'top-center'" />
+</div>

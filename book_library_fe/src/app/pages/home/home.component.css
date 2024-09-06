@@ -1,0 +1,13 @@
+.table-container {
+  padding-top: 20px;
+  margin: 0 auto;
+  /* max-width: fit-content; */
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.action {
+  display: flex;
+  gap: 5px;
+}

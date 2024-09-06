@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.search-bar-container {
+  width: 75rem;
+  margin: 0 auto;
+}

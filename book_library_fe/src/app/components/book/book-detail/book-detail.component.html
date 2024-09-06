@@ -1,0 +1,180 @@
+@if (loading) {
+<div class="card flex justify-content-center">
+  <p-progressSpinner ariaLabel="loading" />
+</div>
+} @else {
+<div class="px-5">
+  <a
+    rel="noopener noreferrer"
+    class="p-button font-bold no-underline"
+    pButton
+    icon="pi pi-chevron-left"
+    (click)="navigateTo('books')"
+  >
+  </a>
+</div>
+
+<div class="card p-5">
+  <p-card header="Book detail information">
+    <div class="grid p-fluid">
+      <div class="col-8">
+        <div class="grid">
+          <div class="col-12 field">
+            <label for="bookTitle">Book Title</label>
+            <input
+              id="bookTitle"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90 font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.title"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="isbn">ISBN</label>
+            <input
+              id="isbn"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.isbn"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="isbn">ISBN13</label>
+            <input
+              id="isbn"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.isbn13"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="numPages">Pages</label>
+            <input
+              id="numPages"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.numPages"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="publicationDate">Publication Date</label>
+            <input
+              id="publicationDate"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.publicationDate"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="languageName">Language Code</label>
+            <input
+              id="languageName"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.languageCode"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-6 field">
+            <label for="publisherName">Publisher Name</label>
+            <input
+              id="publisherName"
+              type="text"
+              pInputText
+              class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+              variant="filled"
+              [value]="book()?.publisher"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col-4 field">
+            <label for="authors">Authors</label>
+            <textarea
+              id="authors"
+              rows="2"
+              cols="30"
+              class="font-semibold text-black-alpha-90"
+              pInputTextarea
+              [autoResize]="true"
+              [value]="book()?.authors"
+              [disabled]="true"
+            >
+            </textarea>
+          </div>
+          <div class="col-4">
+            <div class="mb-5 field">
+              <label for="totalQuantity">Total Quantity</label>
+              <input
+                id="totalQuantity"
+                type="text"
+                pInputText
+                [value]="book()?.totalQuantity"
+                class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+                [disabled]="true"
+              />
+            </div>
+            <div class="field">
+              <label for="currentQuantity">Current Quantity</label>
+              <input
+                id="currentQuantity"
+                type="text"
+                pInputText
+                [value]="book()?.currentQuantity"
+                class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+          <div class="col-4 field">
+            <div class="field">
+              <label for="averageRating">Average Rating</label>
+              <input
+                id="averageRating"
+                type="text"
+                pInputText
+                [value]="book()?.averageRating"
+                class="p-inputtext p-component p-element font-semibold text-black-alpha-90"
+                [disabled]="true"
+              />
+            </div>
+            <div>
+              <label for="status" class="mr-3">Status</label>
+              <p-tag
+                [value]="getStatusValue(book()?.status)"
+                [severity]="getSeverity(book()?.status)"
+                [style]="{ padding: '10px' }"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
+          sed consequuntur error repudiandae numquam deserunt quisquam repellat
+          libero asperiores earum nam nobis, culpa ratione quam perferendis
+          esse, cupiditate neque quas!
+        </p>
+      </div>
+    </div>
+  </p-card>
+</div>
+}
+
+<p-toast [life]="2000" [position]="'top-center'" />
