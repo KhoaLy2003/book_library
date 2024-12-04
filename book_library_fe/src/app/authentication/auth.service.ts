@@ -5,17 +5,17 @@ import { KeycloakService } from 'keycloak-angular';
   providedIn: 'root',
 })
 export class AuthService {
-  // constructor(private keycloakService: KeycloakService) {}
+  constructor(private keycloakService: KeycloakService) {}
 
-  // public getToken(): string {
-  //   return this.keycloakService.getKeycloakInstance().token || '';
-  // }
+  public getToken(): string {
+    return this.keycloakService.getKeycloakInstance().token || '';
+  }
 
-  // public getUsername(): string {
-  //   return this.keycloakService.getUsername();
-  // }
+  public getUsername(): string {
+    return this.keycloakService.getUsername();
+  }
 
-  // public logout(): void {
-  //   this.keycloakService.logout();
-  // }
+  public logout(): void {
+    this.keycloakService.logout();
+  }
 }

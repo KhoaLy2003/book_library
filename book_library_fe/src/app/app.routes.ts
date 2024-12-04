@@ -13,8 +13,8 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: ['admin'] },
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
     children: [
       {
         path: '',

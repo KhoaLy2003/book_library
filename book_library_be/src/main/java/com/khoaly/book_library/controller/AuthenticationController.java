@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    @GetMapping("/hello-admin")
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('admin')")
-    public String hello() {
+    public String helloAdmin() {
         return "Hello admin";
+    }
+
+    @GetMapping("/librarian")
+    @PreAuthorize("hasRole('librarian')")
+    public String helloLibrarian() {
+        return "Hello librarian";
     }
 }

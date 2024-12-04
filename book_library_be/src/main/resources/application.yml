@@ -4,10 +4,15 @@ server:
 spring:
   application:
     name: book-library
+  # datasource:
+  #   url: jdbc:mysql://localhost:3306/book_library
+  #   username: root
+  #   password: 12345
+  #   driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    url: jdbc:mysql://localhost:3306/book_library
-    username: root
-    password: 12345
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/book_library}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:12345}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
@@ -21,3 +26,11 @@ spring:
       initialize-schema: ALWAYS
     job:
       enabled: false
+
+keycloak:
+  realm: book-library
+  auth-server-url: http://localhost:8081
+  credentials:
+    secret: Zdyszn2K5h7iFfuAXSUAGPewilTg2aKM
+  resource: backend
+

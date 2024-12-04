@@ -25,13 +25,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     MessageService,
-    // KeycloakService,
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: initializer,
-    //   deps: [KeycloakService],
-    //   multi: true,
-    // },
+    KeycloakService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      deps: [KeycloakService],
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

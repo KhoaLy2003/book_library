@@ -25,7 +25,9 @@ public class SecurityConfig {
                         req.requestMatchers(
                                         "/api/v1/books/**",
                                         "/api/v1/members/**",
-                                        "api/v1/reports"
+                                        "/api/v1/reports",
+                                        "/api/test/**",
+                                        "/ws/**"
                                 )
                                 .permitAll()
                                 .anyRequest()

@@ -23,6 +23,8 @@ import com.khoaly.book_library.exception.InvalidBorrowPeriodExtensionException;
 import com.khoaly.book_library.exception.MaximumBorrowLimitException;
 import com.khoaly.book_library.exception.MaximumBorrowPeriodException;
 import com.khoaly.book_library.exception.NotFoundException;
+import com.khoaly.book_library.notification.Notification;
+import com.khoaly.book_library.notification.NotificationService;
 import com.khoaly.book_library.repository.AccountRepository;
 import com.khoaly.book_library.repository.BookRepository;
 import com.khoaly.book_library.repository.BorrowingRepository;
@@ -57,6 +59,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     private final BorrowingRepository borrowingRepository;
     private final AccountRepository accountRepository;
     private final BookRepository bookRepository;
+    private final NotificationService notificationService;
     private final ModelMapper modelMapper;
 
     /**
@@ -252,7 +255,19 @@ public class BorrowingServiceImpl implements BorrowingService {
 
             LOGGER.info("There are {} borrowing overdue in {}", overdueBorrowing.size(), dueDate);
 
+            notificationService.sendNotification(Notification
+                    .builder()
+                    .message("There are " + overdueBorrowing.size() + " borrowing overdue in " + dueDate)
+                    .build());
+
             borrowingRepository.saveAll(overdueBorrowing);
+        } else {
+            LOGGER.info("There is no borrowing overdue in {}", dueDate);
+
+            notificationService.sendNotification(Notification
+                    .builder()
+                    .message("There is no borrowing overdue in " + dueDate)
+                    .build());
         }
     }
 

@@ -23,13 +23,13 @@ export class TokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     console.log('Intercepting request:', request.url);
 
-    // const authToken = this.authService.getToken() || '';
-    // console.log(authToken);
-    // request = request.clone({
-    //   setHeaders: {
-    //     Authorization: 'Bearer ' + authToken,
-    //   },
-    // });
+    const authToken = this.authService.getToken() || '';
+    console.log(authToken);
+    request = request.clone({
+      setHeaders: {
+        Authorization: 'Bearer ' + authToken,
+      },
+    });
     return next.handle(request).pipe(
       catchError((error) => {
         console.log(error.error);

@@ -7,15 +7,15 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: book-library
+      # MYSQL_DATABASE: book_library
       MYSQL_USER: user          
       MYSQL_PASSWORD: 12345
     ports:
       - "3307:3306"
-    # volumes:
-    #   - mysql-springboot-data:/var/lib/mysql
-    #   - mysql-springboot-config-deamond:/etc/mysql/conf.d
-    #   - ./be/initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - mysql-springboot-data:/var/lib/mysql
+      - mysql-springboot-config-deamond:/etc/mysql/conf.d
+      - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - book-library-network
 
@@ -28,7 +28,7 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       # KC_PROXY: passthrough
       KC_DB: mysql
-      KC_DB_URL: jdbc:mysql://mysql-container:3306/book-library
+      KC_DB_URL: jdbc:mysql://mysql-container:3306/keycloak
       KC_DB_USERNAME: user
       KC_DB_PASSWORD: 12345
     ports:
@@ -40,6 +40,30 @@ services:
       - mysql-container
     networks:
       - book-library-network
+
+  # backend-container:
+  #   build:
+  #     context: ./book_library_be
+  #     dockerfile: Dockerfile 
+  #   container_name: backend-container
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     # - SPRING_PROFILES_ACTIVE=prod
+  #     - DATASOURCE_URL=jdbc:mysql://mysql-container:3306/book_library?serverTimezone=UTC&allowPublicKeyRetrieval=true
+  #     - DATABASE_USERNAME=user
+  #     - DATABASE_PASSWORD=12345
+  #     # - REDIS_HOST=redis-container
+  #     # - REDIS_PORT=6379
+  #   depends_on:      
+  #     - mysql-container
+  #   networks:
+  #     - book-library-network
+
+volumes:
+  mysql-springboot-data:
+  mysql-springboot-config-deamond:
 
 networks:
   book-library-network:
