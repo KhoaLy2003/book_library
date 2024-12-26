@@ -23,8 +23,8 @@ public class BookController {
 
     @GetMapping
 //    @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<BaseResponse> getBooks(@RequestParam(name = "pageNo") int pageNo,
-                                                 @RequestParam(name = "title") String title) {
+    public ResponseEntity<BaseResponse> getBooks(@RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
+                                                 @RequestParam(name = "title", required = false) String title) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new BaseResponse(HttpStatus.OK.value(), MessageConstant.GET_BOOK_LIST_SUCCESSFULLY, bookService.getBooks(pageNo, title)));
